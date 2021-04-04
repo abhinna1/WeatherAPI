@@ -1,17 +1,21 @@
 from tkinter import *
 import requests
 
+
+
+
 root = Tk()
 root.geometry('300x250')
 root.title('Weather Machine')
-root.resizable(0,0)
-bg=Frame()
+#root.resizable(0,0)
+bg=Frame(bg='#FFFFFF')
 bg.pack(expand=True,fill='both')
 
 
+
 def btn_Click():
+
     ctname=city.get()
-    print(ctname)
     BASE_URL = "https://api.openweathermap.org/data/2.5/weather?"
     API_KEY = "6b2efb27b43cb20d6c0b88c1c762b080"
     if len(ctname)!=0:
@@ -22,21 +26,25 @@ def btn_Click():
         main = data['main']
         temp = main['temp']
         temp_celceus=round(temp - 273.15)
-        report=data['weather']
-        location= Label(bg,text=ctname)
-        tempOut = Label(bg,text=f'temperature:{temp_celceus}C',anchor='se')
-        weatherout=Label(bg,text=(f"Weather : {report[0]['description']}"))
-        weatherout.pack()
-        location.pack()
+        weather=data['weather']
 
+        location = Label(bg, text=f'Location: {ctname}', bg='#FFFFFF')
+        tempOut = Label(bg, text=f'temperature: {temp_celceus}°C', anchor='se', bg='#FFFFFF')
+        weatherout = Label(bg, text=(f"Weather : {weather[0]['description']}"), bg='#FFFFFF')
+
+        location.pack()
+        weatherout.pack()
         tempOut.pack()
+    else:
+        msg=Label(text='Enter Location',font=('Areal',22))
+        msg.pack(bg)
 
 
 
     #Dialoge box to enter city name
 city=Entry(bg)
 city.pack()
-search_btn=Button(bg,text='Search',command=btn_Click)
+search_btn=Button(bg,text='Check Weather',command=btn_Click)
 search_btn.pack()
 
 
